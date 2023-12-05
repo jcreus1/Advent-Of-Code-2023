@@ -1,23 +1,22 @@
 import re
 
 def readCalibrationValuesFromFile(inputFilePath):
-  calibrationValues = [];
+  calibrationValues = []
 
   with open(inputFilePath, "r") as inputFile:
 
     for inputLine in inputFile:
     
       digitsInLine = re.findall("[0-9]", inputLine)
-      numDigitsFound = len(digitsInLine)
       
-      if numDigitsFound == 0:
+      if len(digitsInLine) == 0:
         continue
 
       firstValue = digitsInLine[0]
-      secondValue = digitsInLine[numDigitsFound -1]
-      
-      stringCalibrationValue = str(firstValue) + str(secondValue)
-      calibrationValue = int(stringCalibrationValue)
+      lastValue = digitsInLine[-1]
+      concatenatedValues = str(firstValue) + str(lastValue)
+
+      calibrationValue = int(concatenatedValues)
       calibrationValues.append(calibrationValue)
 
   return calibrationValues
