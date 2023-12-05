@@ -22,15 +22,5 @@ def readCalibrationValuesFromFile(inputFilePath):
 
   return calibrationValues
 
-def sumValues(listOfValues):
-  sumTotal = 0
-  
-  for value in listOfValues:
-    sumTotal += value
-
-  return sumTotal
-
 calibrationValues = readCalibrationValuesFromFile("1. Trebuchet\input.txt")
-sumOfCalibrationValues = sumValues(calibrationValues)
-
-print(sumOfCalibrationValues)
+print(sum(calibrationValues))
