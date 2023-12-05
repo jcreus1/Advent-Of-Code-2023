@@ -1,30 +1,36 @@
 import re
 
-calibrationValues = [];
+def readCalibrationValuesFromFile(inputFilePath):
+  calibrationValues = [];
 
-try:
-  inputFile = open("input.txt", "r")
+  with open(inputFilePath, "r") as inputFile:
 
-  for inputLine in inputFile:
+    for inputLine in inputFile:
+    
+      digitsInLine = re.findall("[0-9]", inputLine)
+      numDigitsFound = len(digitsInLine)
+      
+      if numDigitsFound == 0:
+        continue
+
+      firstValue = digitsInLine[0]
+      secondValue = digitsInLine[numDigitsFound -1]
+      
+      stringCalibrationValue = str(firstValue) + str(secondValue)
+      calibrationValue = int(stringCalibrationValue)
+      calibrationValues.append(calibrationValue)
+
+  return calibrationValues
+
+def sumValues(listOfValues):
+  sumTotal = 0
   
-    digitsInLine = re.findall("[0-9]", inputLine)
-    numDigitsFound = len(digitsInLine)
-    
-    if numDigitsFound == 0:
-      continue
+  for value in listOfValues:
+    sumTotal += value
 
-    firstValue = digitsInLine[0]
-    secondValue = digitsInLine[numDigitsFound -1]
-    
-    stringCalibrationValue = str(firstValue) + str(secondValue)
-    calibrationValue = int(stringCalibrationValue)
-    calibrationValues.append(calibrationValue)
+  return sumTotal
 
-finally:
-  inputFile.close()
-
-sumOfCalibrationValues = 0
-for calibrationValue in calibrationValues:
-  sumOfCalibrationValues += calibrationValue
+calibrationValues = readCalibrationValuesFromFile("1. Trebuchet\input.txt")
+sumOfCalibrationValues = sumValues(calibrationValues)
 
 print(sumOfCalibrationValues)
