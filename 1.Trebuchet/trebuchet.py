@@ -28,27 +28,37 @@ def replaceStringDigitsWithNumberDigits(inputString):
 
   processedString = inputString
 
-  # Loop until all digit words are replaced
-  while True:
-    
-    earliestIndex = -1
-    earliestWord = ""
+  # First Word
+  earliestIndex = -1
+  earliestWord = ""
 
-    # Find first instance of a digit word
-    for key in digitDictionary:
-      searchValueIndex = processedString.find(key)
-    
-      if searchValueIndex != -1 and (earliestIndex == -1 or searchValueIndex < earliestIndex):
-          earliestIndex = searchValueIndex
-          earliestWord = key
+  # Find first instance of a digit word
+  for key in digitDictionary:
+    searchValueIndex = processedString.find(key)
+  
+    if searchValueIndex != -1 and (earliestIndex == -1 or searchValueIndex < earliestIndex):
+        earliestIndex = searchValueIndex
+        earliestWord = key
 
-    # Replace digit word if found
-    if earliestIndex != -1:
-      processedString = processedString.replace(earliestWord, digitDictionary[earliestWord], 1)
+  # Replace digit word if found
+  if earliestIndex != -1:
+    processedString = processedString.replace(earliestWord, digitDictionary[earliestWord], 1)
 
-    # Exit if no digit word found
-    else: 
-      break
+  # Last word
+  latestIndex = -1
+  latestWord = ""
+
+  # Find last instance of a digit word
+  for key in digitDictionary:
+    searchValueIndex = processedString.rfind(key)
+  
+    if searchValueIndex != -1 and (latestIndex == -1 or searchValueIndex > latestIndex):
+        latestIndex = searchValueIndex
+        latestWord = key
+
+  # Replace digit word if found
+  if latestIndex != -1:
+    processedString = processedString[:latestIndex] + digitDictionary[latestWord] + processedString[latestIndex + len(latestWord):]
 
   return processedString
 
@@ -81,5 +91,5 @@ def readCalibrationValuesFromFile(inputFilePath):
 
   return calibrationValues
 
-calibrationValues = readCalibrationValuesFromFile("1. Trebuchet\input.txt")
+calibrationValues = readCalibrationValuesFromFile("1.Trebuchet/input.txt")
 print(sum(calibrationValues))
